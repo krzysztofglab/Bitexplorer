@@ -1,0 +1,135 @@
+@keyframes openMenu {
+  0% {
+    width: 0;
+    height: 0;
+  }
+
+  40% {
+    width: 500px;
+    height: 0;
+  }
+
+  60% {
+    width: 500px;
+    height: 0;
+  }
+
+  99% {
+    padding: 0;
+  }
+  100% {
+    padding: 40px;
+    width: 500px;
+    height: 600px;
+  }
+}
+
+@keyframes openMenu-Header {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes openMenu-Content {
+  0% {
+    height: 30px;
+    opacity: 0;
+  }
+
+  30% {
+    height: 30px;
+    opacity: 1;
+  }
+
+  100% {
+    height: 430px;
+    opacity: 1;
+  }
+}
+
+@keyframes openMenu-Button {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes openBoard {
+  0% {
+    padding: 40px;
+    width: 500px;
+    height: 600px;
+  }
+
+  1% {
+    padding: 5px;
+  }
+
+  100% {
+    width: 1200px;
+    height: 600px;
+    display: block;
+  }
+}
+
+@keyframes openResult {
+  0% {
+    width: 1200px;
+    height: 600px;
+  }
+
+  100% {
+    width: 500px;
+    height: 600px;
+  }
+}
+
+@keyframes displayBoard {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+
+.animOpenMenu {
+  animation: openMenu .5s ease forwards;
+}
+
+.animOpenMenu-Header {
+  animation: openMenu-Header .5s 0.5s ease forwards;
+}
+
+.animOpenMenu-Content {
+  animation: openMenu-Content .5s 1s ease forwards;
+}
+
+.animExitMenu {
+  display: none;
+}
+
+.animDisplayBoard {
+  animation: displayBoard .5s .5s ease forwards;
+}
+
+.animOpenMenu-Button {
+  animation: openMenu-Button .5s 6.0s ease forwards;
+}
+
+.animOpenBoard {
+  animation: openBoard .5s ease forwards;
+}
+
+.animOpenResult {
+  animation: openResult .5s ease forwards;
+}

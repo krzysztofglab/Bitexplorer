@@ -278,3 +278,18 @@ table td:hover {
 .disabled_key {
   color: rgb(78, 60, 96);
 }
+
+.token_good {
+  background-color: rgb(48, 156, 65);
+  color: black;
+}
+
+.token_bad {
+  background-color: #9C3043;
+  color: black;
+}
+
+.token_ignored {
+  color: black;
+  background-color: transparent;
+}

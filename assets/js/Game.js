@@ -1,20 +1,25 @@
 import { Animation } from "./Animation.js";
+import { Time } from "./Time.js";
 
 export class Game {
   constructor() {
     this.animation = new Animation();
+    this.time = new Time(60, this.showResult);
+
     this.keys = ["1C", "7A", "E9", "55", "BD", "XX"];
-    this.time = 60;
-    this.password = [];
+
     this.activeRow = 0;
     this.activeCol = null;
+
     this.playing = false;
-    this.end = false;
-    this.miliseconds = 0;
+    this.gameOver = false;
+    
     this.refreshCost = 3;
     this.score = 0;
     this.scoreReward = 5;
     this.ramUsage = 0;
+
+    this.password = [];
     this.ram = ["-","-","-","-","-","-","-","-"];
     this.tokens = [
       ["-","-","-","-","-","-","-","-"],
@@ -33,6 +38,10 @@ export class Game {
     this.start();
   }
 
+  showResult() {
+    alert('Game over!');
+  }
+
   start() {
     this.animation.openMenu();
   }
@@ -40,7 +49,6 @@ export class Game {
   play() {
     document.querySelector('.score').textContent = this.score;
     document.querySelector('.refreshCost').textContent = this.refreshCost;
-    document.querySelector('.counter_time').textContent = this.time + ".00";
 
     const rewards = document.querySelectorAll('.reward');
     rewards.forEach((reward, i) => {
@@ -98,22 +106,51 @@ export class Game {
     this.password[2] = [];
     this.password[3] = [];
 
-    for(let i=0; i<2; i++){
-      this.tokens[0][i] = this.keys[Math.floor(Math.random() * this.keys.length)];
-      this.password[0][i] = this.tokens[0][i];
-    }
-    for(let i=0; i<3; i++){
-      this.tokens[1][i] = this.keys[Math.floor(Math.random() * this.keys.length)];
-      this.password[1][i] = this.tokens[1][i];
-    }
-    for(let i=0; i<4; i++){
-      this.tokens[2][i] = this.keys[Math.floor(Math.random() * this.keys.length)];
-      this.password[2][i] = this.tokens[2][i];
-    }
-    for(let i=0; i<6; i++){
-      this.tokens[3][i] = this.keys[Math.floor(Math.random() * this.keys.length)];
-      this.password[3][i] = this.tokens[3][i];
-    }
+    const elementsTokens = document.querySelectorAll('.token');
+    elementsTokens.forEach(elementToken => {
+      elementToken.classList.remove('token_ignored');
+      elementToken.classList.remove('token_good');
+      elementToken.classList.remove('token_bad');
+    })
+
+    this.tokens[0].forEach((token,i) => {
+      if(i < 2) {
+        this.tokens[0][i] = this.keys[Math.floor(Math.random() * this.keys.length)];
+        this.password[0][i] = this.tokens[0][i];
+      } else {
+        this.tokens[0][i] = '-';
+      }
+    })
+
+    this.tokens[1].forEach((token,i) => {
+      if(i < 3) {
+        this.tokens[1][i] = this.keys[Math.floor(Math.random() * this.keys.length)];
+        this.password[1][i] = this.tokens[1][i];
+      } else {
+        this.tokens[1][i] = '-';
+      }
+    })
+
+    this.tokens[2].forEach((token,i) => {
+      if(i < 4) {
+        this.tokens[2][i] = this.keys[Math.floor(Math.random() * this.keys.length)];
+        this.password[2][i] = this.tokens[2][i];
+      } else {
+        this.tokens[2][i] = '-';
+      }
+    })
+
+    this.tokens[3].forEach((token,i) => {
+      if(i < 6) {
+        this.tokens[3][i] = this.keys[Math.floor(Math.random() * this.keys.length)];
+        this.password[3][i] = this.tokens[3][i];
+      } else {
+        this.tokens[3][i] = '-';
+      }
+    })
+
+
+
     this.drawTokens();
   }
 
@@ -134,29 +171,54 @@ export class Game {
         const tokenGroups = document.querySelectorAll('.token_group');
         const token = tokenGroups[0].querySelectorAll('.token')[this.ramUsage-1];
 
-        token.style.backgroundColor = "rgb(48, 156, 65)";
-        token.style.color = "rgb(0, 0, 0)";
+        token.classList.add('token_good');
 
         if((this.ramUsage-1) == 7 || (this.tokens[0][this.ramUsage] == "-")){
 
           this.tokensBlocked[0] = true;
 
-          this.time += this.rewards[0].time;
+          this.time.changeSeconds(this.rewards[0].time);
           this.score += this.rewards[0].bits;
 
-          alert('Container 1 finished');
+          const tokensGroup = document.querySelectorAll('.token_group')[0];
+          const tokens = tokensGroup.querySelectorAll('.token');
+
+          this.tokens[0] = ["C","O","R","R","E","C","T","."];
+          
+          for(let i=0; i < 8; i++){
+            tokens[i].classList.add('token_good');
+            tokens[i].classList.remove('token_bad');
+            tokens[i].classList.remove('token_ignored');
+          }
         }
       } else {
 
         if((this.ramUsage-1) + 2 < 8){
+          const tokensGroup = document.querySelectorAll('.token_group')[0];
+          const tokens = tokensGroup.querySelectorAll('.token');
+
           for(let i=0; i <= (this.ramUsage-1); i++){
             this.tokens[0][i] = ".";
+            tokens[i].classList.remove('token_good');
+            tokens[i].classList.remove('token_bad');
+            tokens[i].classList.add('token_ignored');
           }
+
           this.tokens[0][(this.ramUsage-1) + 1] = this.password[0][0];
           this.tokens[0][(this.ramUsage-1) + 2] = this.password[0][1];
         } else {
-          alert('Container 1 lost');
           this.tokensBlocked[0] = true;
+
+          const tokensGroup = document.querySelectorAll('.token_group')[0];
+          const tokens = tokensGroup.querySelectorAll('.token');
+
+          this.tokens[0] = ["W","R","O","N","G",".",".","."];
+
+          for(let i=0; i < 8; i++){
+            tokens[i].classList.remove('token_good');
+            tokens[i].classList.add('token_bad');
+            tokens[i].classList.remove('token_ignored');
+          }
         }
 
       }
@@ -167,30 +229,54 @@ export class Game {
         const tokenGroups = document.querySelectorAll('.token_group');
         const token = tokenGroups[1].querySelectorAll('.token')[this.ramUsage-1];
 
-        token.style.backgroundColor = "rgb(48, 156, 65)";
-        token.style.color = "rgb(0, 0, 0)";
+        token.classList.add('token_good');
 
-        if((this.ramUsage-1) == 6 || (this.tokens[0][this.ramUsage] == "-")){
+        if((this.ramUsage-1) == 7 || (this.tokens[1][this.ramUsage] == "-")){
 
           this.tokensBlocked[1] = true;
 
-          this.time += this.rewards[1].time;
+          this.time.changeSeconds(this.rewards[1].time);
           this.score += this.rewards[1].bits;
 
-          alert('Container 2 finished');
+          const tokensGroup = document.querySelectorAll('.token_group')[1];
+          const tokens = tokensGroup.querySelectorAll('.token');
+
+          this.tokens[1] = ["C","O","R","R","E","C","T","."];
+          
+          for(let i=0; i < 8; i++){
+            tokens[i].classList.add('token_good');
+            tokens[i].classList.remove('token_bad');
+            tokens[i].classList.remove('token_ignored');
+          }
         }
       } else {
 
         if((this.ramUsage-1) + 3 < 8){
+          const tokensGroup = document.querySelectorAll('.token_group')[1];
+          const tokens = tokensGroup.querySelectorAll('.token');
+
           for(let i=0; i <= (this.ramUsage-1); i++){
             this.tokens[1][i] = ".";
+            tokens[i].classList.remove('token_good');
+            tokens[i].classList.remove('token_bad');
+            tokens[i].classList.add('token_ignored');
           }
           this.tokens[1][(this.ramUsage-1) + 1] = this.password[1][0];
           this.tokens[1][(this.ramUsage-1) + 2] = this.password[1][1];
           this.tokens[1][(this.ramUsage-1) + 3] = this.password[1][2];
+          
         } else {
-          alert('Container 2 lost');
           this.tokensBlocked[1] = true;
+
+          const tokensGroup = document.querySelectorAll('.token_group')[1];
+          const tokens = tokensGroup.querySelectorAll('.token');
+          this.tokens[1] = ["W","R","O","N","G",".",".","."];
+
+          for(let i=0; i < 8; i++){
+            tokens[i].classList.remove('token_good');
+            tokens[i].classList.add('token_bad');
+            tokens[i].classList.remove('token_ignored');
+          }
         }
 
       }
@@ -201,31 +287,55 @@ export class Game {
         const tokenGroups = document.querySelectorAll('.token_group');
         const token = tokenGroups[2].querySelectorAll('.token')[this.ramUsage-1];
 
-        token.style.backgroundColor = "rgb(48, 156, 65)";
-        token.style.color = "rgb(0, 0, 0)";
+        token.classList.add('token_good');
 
-        if((this.ramUsage-1) == 5 || (this.tokens[2][this.ramUsage] == "-")){
+        if((this.ramUsage-1) == 7 || (this.tokens[2][this.ramUsage] == "-")){
 
           this.tokensBlocked[2] = true;
 
-          this.time += this.rewards[2].time;
+          this.time.changeSeconds(this.rewards[2].time);
           this.score += this.rewards[2].bits;
 
-          alert('Container 3 finished');
+          const tokensGroup = document.querySelectorAll('.token_group')[2];
+          const tokens = tokensGroup.querySelectorAll('.token');
+
+          this.tokens[2] = ["C","O","R","R","E","C","T","."];
+          
+          for(let i=0; i < 8; i++){
+            tokens[i].classList.add('token_good');
+            tokens[i].classList.remove('token_bad');
+            tokens[i].classList.remove('token_ignored');
+          }
         }
       } else {
 
         if((this.ramUsage-1) + 4 < 8){
+          const tokensGroup = document.querySelectorAll('.token_group')[2];
+          const tokens = tokensGroup.querySelectorAll('.token');
+
           for(let i=0; i <= (this.ramUsage-1); i++){
             this.tokens[2][i] = ".";
+            tokens[i].classList.remove('token_good');
+            tokens[i].classList.remove('token_bad');
+            tokens[i].classList.add('token_ignored');
           }
           this.tokens[2][(this.ramUsage-1) + 1] = this.password[2][0];
           this.tokens[2][(this.ramUsage-1) + 2] = this.password[2][1];
           this.tokens[2][(this.ramUsage-1) + 3] = this.password[2][2];
           this.tokens[2][(this.ramUsage-1) + 4] = this.password[2][3];
         } else {
-          alert('Container 3 lost');
           this.tokensBlocked[2] = true;
+
+          const tokensGroup = document.querySelectorAll('.token_group')[2];
+          const tokens = tokensGroup.querySelectorAll('.token');
+
+          this.tokens[2] = ["W","R","O","N","G",".",".","."];
+
+          for(let i=0; i < 8; i++){
+            tokens[i].classList.remove('token_good');
+            tokens[i].classList.add('token_bad');
+            tokens[i].classList.remove('token_ignored');
+          }
         }
 
       }
@@ -236,24 +346,39 @@ export class Game {
         const tokenGroups = document.querySelectorAll('.token_group');
         const token = tokenGroups[3].querySelectorAll('.token')[this.ramUsage-1];
 
-        token.style.backgroundColor = "rgb(48, 156, 65)";
-        token.style.color = "rgb(0, 0, 0)";
+        token.classList.add('token_good');
 
-        if((this.ramUsage-1) == 3 || (this.tokens[3][this.ramUsage] == "-")){
+        if((this.ramUsage-1) == 7 || (this.tokens[3][this.ramUsage] == "-")){
 
           this.tokensBlocked[3] = true;
 
-          this.time += this.rewards[3].time;
+          this.time.changeSeconds(this.rewards[3].time);
           this.score += this.rewards[3].bits;
 
-          alert('Container 4 finished');
+          const tokensGroup = document.querySelectorAll('.token_group')[3];
+          const tokens = tokensGroup.querySelectorAll('.token');
+
+          this.tokens[3] = ["C","O","R","R","E","C","T","."];
+          
+          for(let i=0; i < 8; i++){
+            tokens[i].classList.add('token_good');
+            tokens[i].classList.remove('token_bad');
+            tokens[i].classList.remove('token_ignored');
+          }
         }
       } else {
 
         if((this.ramUsage-1) + 6 < 8){
+          const tokensGroup = document.querySelectorAll('.token_group')[3];
+          const tokens = tokensGroup.querySelectorAll('.token');
+
           for(let i=0; i <= (this.ramUsage-1); i++){
             this.tokens[3][i] = ".";
+            tokens[i].classList.remove('token_good');
+            tokens[i].classList.remove('token_bad');
+            tokens[i].classList.add('token_ignored');
           }
+
           this.tokens[3][(this.ramUsage-1) + 1] = this.password[3][0];
           this.tokens[3][(this.ramUsage-1) + 2] = this.password[3][1];
           this.tokens[3][(this.ramUsage-1) + 3] = this.password[3][2];
@@ -261,8 +386,18 @@ export class Game {
           this.tokens[3][(this.ramUsage-1) + 5] = this.password[3][4];
           this.tokens[3][(this.ramUsage-1) + 6] = this.password[3][5];
         } else {
-          alert('Container 4 lost');
           this.tokensBlocked[3] = true;
+
+          const tokensGroup = document.querySelectorAll('.token_group')[3];
+          const tokens = tokensGroup.querySelectorAll('.token');
+
+          this.tokens[3] = ["W","R","O","N","G",".",".","."];
+
+          for(let i=0; i < 8; i++){
+            tokens[i].classList.remove('token_good');
+            tokens[i].classList.add('token_bad');
+            tokens[i].classList.remove('token_ignored');
+          }
         }
 
       }
@@ -273,11 +408,11 @@ export class Game {
   }
 
   checkKey(row, col){
-    if(this.end) return
+    if(this.gameOver) return
 
     if(!this.playing) {
       this.playing = true;
-      this.timer();
+      this.time.start();
     }
 
     if(this.ramUsage < this.ram.length) {
@@ -319,42 +454,10 @@ export class Game {
     document.querySelector('.score').textContent = this.score;
   }
 
-  timer() {
-    if(this.playing){
-      const element = document.querySelector('.counter_time');
-
-      if(this.time > 0){
-        if(this.miliseconds > 0){
-          this.miliseconds -= 1;
-        } else {
-          this.time -= 1;
-          this.miliseconds = 50;
-        }
-      } else if(this.time == 0) {
-        if(this.miliseconds > 0){
-          this.miliseconds -= 1;
-        } else {
-          this.time -= 1;
-        }
-      } else {
-        this.time = 0;
-        this.miliseconds = 0;
-        this.playing = false;
-        this.end = true;
-      }
-
-      const seconds = this.time;
-      const miliseconds = this.miliseconds >= 10 ? this.miliseconds : '0' + this.miliseconds;
-
-      element.textContent = `${seconds}:${miliseconds}`;
-
-      setTimeout(this.timer.bind(this), 20);
-    }
-  }
-
   refresh() {
-    this.time -= this.refreshCost;
+    this.time.changeSeconds(-this.refreshCost);
     this.ram = ["-","-","-","-","-","-","-","-"];
+    this.tokensBlocked = [false, false, false, false];
     this.ramUsage = 0;
     this.generateMatrix();
     this.writeRam();
@@ -364,4 +467,5 @@ export class Game {
     document.querySelector('.btn_play').addEventListener('click', this.play.bind(this));
     document.querySelector('.btn_refresh').addEventListener('click', this.refresh.bind(this));
   }
+
 }

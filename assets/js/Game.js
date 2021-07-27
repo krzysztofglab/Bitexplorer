@@ -1,8 +1,10 @@
 import { Animation } from "./Animation.js";
 import { Time } from "./Time.js";
+import { UI } from "./UI.js";
 
 export class Game {
   constructor() {
+    this.ui = new UI();
     this.animation = new Animation();
     this.time = new Time(60, this.showResult);
 

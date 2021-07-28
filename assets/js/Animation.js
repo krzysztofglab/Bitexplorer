@@ -1,6 +1,7 @@
 export class Animation {
   openMenu() {
     document.querySelector('.game').classList.add('animOpenMenu');
+
     document.querySelector('.menu_header').classList.add('animOpenMenu-Header');
     document.querySelector('.content').classList.add('animOpenMenu-Content');
     document.querySelector('.btn_play').classList.add('animOpenMenu-Button');
@@ -9,9 +10,22 @@ export class Animation {
 
   openBoard() {
     document.querySelector('.game').classList.remove('animOpenMenu');
-    document.querySelector('.menu').classList.add('animExitMenu');
     document.querySelector('.game').classList.add('animOpenBoard');
+
+    document.querySelector('.menu').classList.add('disabled');
+    document.querySelector('.board').classList.remove('disabled');
+    
     document.querySelector('.board').classList.add('animDisplayBoard');
+  }
+
+  openResult() {
+    document.querySelector('.game').classList.remove('animOpenBoard');
+    document.querySelector('.game').classList.add('animOpenResult');
+
+    document.querySelector('.board').classList.add('disabled');
+    document.querySelector('.result').classList.remove('disabled');
+
+    document.querySelector('.result').classList.add('animDisplayResult');
   }
 
   generateText() {

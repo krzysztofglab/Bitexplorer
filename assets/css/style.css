@@ -15,9 +15,6 @@ body {
   font-family: Roboto;
 }
 
-
-
-
 .game {
   position: fixed;
   left: 50%;
@@ -292,4 +289,56 @@ table td:hover {
 .token_ignored {
   color: black;
   background-color: transparent;
+}
+
+.result {
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+}
+
+.result p {
+  text-align: center;
+  color: #9C3530;
+  font-size: 20px;
+  letter-spacing: 1px;
+  margin: 15px;
+  font-weight: bold;
+}
+
+.result h2 {
+  text-align: center;
+  color: #9C3530;
+  font-size: 16px;
+  letter-spacing: 1px;
+  margin-bottom: 30px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.result h4 {
+  text-align: center;
+  color: #9C3530;
+  font-size: 12px;
+  letter-spacing: 1px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.btn_try_again {
+  display: block;
+  width: 320px;
+  height: 30px;
+  background-color: rgba(156,53,48,1);
+  color: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 30px;
+  text-align: center;
+  margin-top: 30px;
+  font-family: Roboto;
+  cursor: pointer;
+  border: none;
+  text-transform: uppercase;
+  align-self: center;
 }

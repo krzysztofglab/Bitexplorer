@@ -6,7 +6,7 @@ export class Game {
   constructor() {
     this.ui = new UI();
     this.animation = new Animation();
-    this.time = new Time(60, this.showResult);
+    this.time = new Time(60, this);
 
     this.keys = ["1C", "7A", "E9", "55", "BD", "XX"];
 
@@ -41,7 +41,9 @@ export class Game {
   }
 
   showResult() {
-    alert('Game over!');
+    document.querySelector('.collectedBits').textContent = this.score;
+    document.querySelector('.connectionTime').textContent = this.time.convertedStoperTime;
+    this.animation.openResult();
   }
 
   start() {

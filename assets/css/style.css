@@ -16,7 +16,6 @@ body {
   font-family: Roboto;
 }
 
-<<<<<<< HEAD
 #myVideo {
   position: fixed;
   right: 0;
@@ -35,8 +34,6 @@ body {
   background-color: rgba(15,0,0,0.90);
 }
 
-=======
->>>>>>> 790a2bc489afaa3e639ec17056886664c6e9fe8c
 .game {
   position: fixed;
   left: 50%;

@@ -1,6 +1,7 @@
 export class Time {
-  constructor(seconds, gameOverFunction) {
-    this.gameOverFunction = gameOverFunction;
+  constructor(seconds, gameClass) {
+    this.gameClass = gameClass;
+    this.stoperTime = 0;
     this.active = false;
     this.maxSeconds = seconds;
     this.seconds = seconds;
@@ -13,12 +14,30 @@ export class Time {
   start() {
     this.active = true;
     this.countdown();
+    this.stoper()
   }
 
   changeSeconds(value) {
     this.seconds += value;
     this.miliseconds = 0;
     this.maxSeconds = this.seconds > this.maxSeconds ? this.seconds : this.maxSeconds;
+  }
+
+  stoper() {
+    if(this.active){
+      this.stoperTime++;
+      console.log(this.stoperTime);
+      setTimeout(this.stoper.bind(this), 1000);
+    }
+  }
+
+  convertStoperTime() {
+    const minutes = Math.floor(this.stoperTime / 60);
+    let seconds = this.stoperTime - (minutes * 60);
+
+    seconds = seconds >= 10 ? seconds : '0' + seconds;
+
+    this.convertedStoperTime = `${minutes}m ${seconds}s`;
   }
 
   countdown() {
@@ -60,7 +79,8 @@ export class Time {
   }
 
   stop() {
-    this.gameOverFunction();
     this.active = false;
+    this.convertStoperTime();
+    this.gameClass.showResult();
   }
 }

@@ -6,6 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./assets/css/style.css">
   <link rel="stylesheet" href="./assets/css/animations.css">
+  <link rel="apple-touch-icon" sizes="76x76" href="./assets/icon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/icon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/icon/favicon-16x16.png">
+  <link rel="manifest" href="./assets/icon/site.webmanifest">
+  <link rel="mask-icon" href="./assets/icon/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
   <title>Game | Bitexplorer</title>
 </head>
@@ -16,7 +23,7 @@
     <section class="menu">
       <div class="menu_header">
         <h1 class="title">Bitexplorer</h1>
-        <p class="subtitle">Hacking minigame inspired by Cyberpunk 2077</p>
+        <p class="subtitle">Hacking minigame inspired by <a href="https://www.cyberpunk.net" style="color: inherit">Cyberpunk 2077</a></p>
       </div>
       <div class="content">
         <div class="content_header">Loading application... Please wait</div>
@@ -53,76 +60,24 @@
           </section>
           <section class="window" style="margin-bottom: 10px">
             <div class="section_header">RAM MEMORY</div>
-            <div class="section_body memory">
-              <!-- GENERATE RAM HERE -->
-              <div id="token-ram-0" class="memory_slot">-</div>
-              <div id="token-ram-1" class="memory_slot">-</div>
-              <div id="token-ram-2" class="memory_slot">-</div>
-              <div id="token-ram-3" class="memory_slot">-</div>
-              <div id="token-ram-4" class="memory_slot">-</div>
-              <div id="token-ram-5" class="memory_slot">-</div>
-              <div id="token-ram-6" class="memory_slot">-</div>
-              <div id="token-ram-7" class="memory_slot">-</div>
-            </div>
+            <div class="section_body memory"></div>
           </section>
           <section class="window">
             <div class="section_header">ACCESS TOKEN</div>
-            <div class="section_body tokens" style="padding: 0 20px;">
-
-              <div class="token_group">
-								<div class="token">-</div>
-								<div class="token">-</div>
-								<div class="token">-</div>
-								<div class="token">-</div>
-								<div class="token">-</div>
-								<div class="token">-</div>
-								<div class="token">-</div>
-								<div class="token">-</div>
-							  <div class="reward">{ reward }</div>
-							</div>
-
-              <div class="token_group">
-								<div class="token">-</div>
-								<div class="token">-</div>
-								<div class="token">-</div>
-								<div class="token">-</div>
-								<div class="token">-</div>
-								<div class="token">-</div>
-								<div class="token">-</div>
-								<div class="token">-</div>
-                <div class="reward">{ reward }</div>
-							</div>
-
-              <div class="token_group">
-								<div class="token">-</div>
-								<div class="token">-</div>
-								<div class="token">-</div>
-								<div class="token">-</div>
-								<div class="token">-</div>
-								<div class="token">-</div>
-								<div class="token">-</div>
-								<div class="token">-</div>
-                <div class="reward">{ reward }</div>
-							</div>
-
-              <div class="token_group">
-								<div class="token">-</div>
-								<div class="token">-</div>
-								<div class="token">-</div>
-								<div class="token">-</div>
-								<div class="token">-</div>
-								<div class="token">-</div>
-								<div class="token">-</div>
-								<div class="token">-</div>
-                <div class="reward">{ reward }</div>
-							</div>
-
-            </div>
+            <div class="section_body tokens" style="padding: 0 20px;"></div>
           </section>
         </div>
       </div>
     </section>
-    <section class="result"></section>
+    <section class="result">
+      <img src="./assets/img/attention.svg" alt="">
+      <h2>Connection information</h2>
+      <h4>Collected bits</h4>
+      <p class="collectedBits">{ collected_bits }</p>
+      <h4 class="subtitle">Connection time</h4>
+      <p class="connectionTime">{ connection_time }</p>
+      <a href="" class="btn_try_again">Try again !</a>
+    </section>
   </main>
   <script src="./assets/js/app.js" type="module"></script>
 </body>

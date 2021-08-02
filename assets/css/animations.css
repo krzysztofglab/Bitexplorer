@@ -24,6 +24,37 @@
   }
 }
 
+@keyframes openBoard {
+  0% {
+    padding: 40px;
+    width: 500px;
+    height: 600px;
+  }
+
+  1% {
+    padding: 5px;
+  }
+
+  100% {
+    width: 1200px;
+    height: 600px;
+    display: block;
+  }
+}
+
+@keyframes openResult {
+  0% {
+    width: 1200px;
+    height: 600px;
+    padding: 0px;
+  }
+
+  100% {
+    width: 500px;
+    height: 600px;
+  }
+}
+
 @keyframes openMenu-Header {
   0% {
     opacity: 0;
@@ -61,37 +92,17 @@
   }
 }
 
-@keyframes openBoard {
-  0% {
-    padding: 40px;
-    width: 500px;
-    height: 600px;
-  }
-
-  1% {
-    padding: 5px;
-  }
-
-  100% {
-    width: 1200px;
-    height: 600px;
-    display: block;
-  }
-}
-
-@keyframes openResult {
-  0% {
-    width: 1200px;
-    height: 600px;
-  }
-
-  100% {
-    width: 500px;
-    height: 600px;
-  }
-}
-
 @keyframes displayBoard {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes displayResult {
   0% {
     opacity: 0;
   }
@@ -114,7 +125,7 @@
   animation: openMenu-Content .5s 1s ease forwards;
 }
 
-.animExitMenu {
+.disabled {
   display: none;
 }
 
@@ -122,8 +133,12 @@
   animation: displayBoard .5s .5s ease forwards;
 }
 
+.animDisplayResult {
+  animation: displayResult .5s .5s ease forwards;
+}
+
 .animOpenMenu-Button {
-  animation: openMenu-Button .5s 6.5s ease forwards;
+  animation: openMenu-Button .5s 6s ease forwards;
 }
 
 .animOpenBoard {

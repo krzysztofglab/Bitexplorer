@@ -138,7 +138,7 @@
 }
 
 .animOpenMenu-Button {
-  animation: openMenu-Button .5s 6s ease forwards;
+  animation: openMenu-Button .5s ease forwards;
 }
 
 .animOpenBoard {

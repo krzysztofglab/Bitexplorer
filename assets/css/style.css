@@ -8,15 +8,31 @@
 html {
   font-size: 10px;
 }
+
 body {
   font-size: 1.6rem;
   box-sizing: border-box;
-  background-color: rgba(15,0,0,0.90);
+  background-color: rgba(15,0,0,1);
   font-family: Roboto;
 }
 
+#myVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  background-color: rgba(15,0,0,0.90);
+}
 
-
+.video-background {
+  min-width: 100%;
+  min-height: 100%;
+  position: fixed;
+  right: 0;
+  top: 0;
+  background-color: rgba(15,0,0,0.90);
+}
 
 .game {
   position: fixed;
